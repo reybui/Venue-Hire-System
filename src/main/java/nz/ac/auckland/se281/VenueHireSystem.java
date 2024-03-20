@@ -21,6 +21,10 @@ public class VenueHireSystem {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
       return;
     }
+    if (Integer.parseInt(capacityInput) <= 0) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
+      return;
+    }
     Venue newVenue =
         new Venue(
             venueName, venueCode, Integer.parseInt(capacityInput), Integer.parseInt(hireFeeInput));
