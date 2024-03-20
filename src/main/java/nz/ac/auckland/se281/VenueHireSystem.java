@@ -12,7 +12,12 @@ public class VenueHireSystem {
   }
 
   public void printVenues() {
-    MessageCli.NO_VENUES.printMessage();
+    if (venues.isEmpty()) {
+      MessageCli.NO_VENUES.printMessage();
+      return;
+    } else if (venues.size() == 1) {
+      MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
+    }
   }
 
   public void createVenue(
