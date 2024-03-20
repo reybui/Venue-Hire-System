@@ -72,6 +72,14 @@ public class VenueHireSystem {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " positive");
       return;
     }
+
+    for (Venue venue : venues) {
+      if (venue.getVenueCode().equals(venueCode)) {
+        MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venue.GetVenueName());
+        return;
+      }
+    }
+
     Venue newVenue =
         new Venue(
             venueName, venueCode, Integer.parseInt(capacityInput), Integer.parseInt(hireFeeInput));
