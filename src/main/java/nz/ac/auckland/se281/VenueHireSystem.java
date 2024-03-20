@@ -17,6 +17,26 @@ public class VenueHireSystem {
       return;
     } else if (venues.size() == 1) {
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
+    } else if (venues.size() == 2) {
+      MessageCli.NUMBER_VENUES.printMessage("are", "two", "s");
+    } else if (venues.size() == 3) {
+      MessageCli.NUMBER_VENUES.printMessage("are", "three", "s");
+    } else if (venues.size() == 4) {
+      MessageCli.NUMBER_VENUES.printMessage("are", "four", "s");
+    } else if (venues.size() == 5) {
+      MessageCli.NUMBER_VENUES.printMessage("are", "five", "s");
+    } else if (venues.size() == 6) {
+      MessageCli.NUMBER_VENUES.printMessage("are", "six", "s");
+    } else if (venues.size() == 7) {
+      MessageCli.NUMBER_VENUES.printMessage("are", "seven", "s");
+    } else if (venues.size() == 8) {
+      MessageCli.NUMBER_VENUES.printMessage("are", "eight", "s");
+    } else if (venues.size() == 9) {
+      MessageCli.NUMBER_VENUES.printMessage("are", "nine", "s");
+    } else if (venues.size() > 10) {
+      int size = venues.size();
+      String sizeAsString = Integer.toString(size);
+      MessageCli.NUMBER_VENUES.printMessage("are", sizeAsString, "s");
     }
   }
 
