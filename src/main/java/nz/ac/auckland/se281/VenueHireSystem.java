@@ -33,10 +33,20 @@ public class VenueHireSystem {
       MessageCli.NUMBER_VENUES.printMessage("are", "eight", "s");
     } else if (venues.size() == 9) {
       MessageCli.NUMBER_VENUES.printMessage("are", "nine", "s");
-    } else if (venues.size() > 10) {
+    } else if (venues.size() > 9) {
       int size = venues.size();
       String sizeAsString = Integer.toString(size);
       MessageCli.NUMBER_VENUES.printMessage("are", sizeAsString, "s");
+    }
+
+    for (int i = 0; i < venues.size(); i++) {
+      Venue venue = venues.get(i);
+      String name = venue.GetVenueName();
+      String code = venue.getVenueCode();
+      int capacity = venue.capacity();
+      int hireFee = venue.hireFee();
+      MessageCli.VENUE_ENTRY.printMessage(
+          name, code, Integer.toString(capacity), Integer.toString(hireFee), "'to do'");
     }
   }
 
