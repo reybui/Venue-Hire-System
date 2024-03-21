@@ -5,11 +5,9 @@ import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
 public class VenueHireSystem {
-  private ArrayList<Venue> venues;
+  private ArrayList<Venue> venues = new ArrayList<Venue>();
 
-  public VenueHireSystem() {
-    this.venues = new ArrayList<>();
-  }
+  public VenueHireSystem() {}
 
   public void printVenues() {
     if (venues.isEmpty()) {
@@ -74,7 +72,7 @@ public class VenueHireSystem {
     }
 
     for (Venue venue : venues) {
-      if (venue.getVenueCode().equals(venueCode)) {
+      if (venue.getVenueCode().equalsIgnoreCase(venueCode)) {
         MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venue.GetVenueName());
         return;
       }
