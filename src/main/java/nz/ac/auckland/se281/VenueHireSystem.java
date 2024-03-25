@@ -39,10 +39,10 @@ public class VenueHireSystem {
 
     for (int i = 0; i < venues.size(); i++) {
       Venue venue = venues.get(i);
-      String name = venue.GetVenueName();
+      String name = venue.getVenueName();
       String code = venue.getVenueCode();
-      int capacity = venue.capacity();
-      int hireFee = venue.hireFee();
+      int capacity = venue.getCapacity();
+      int hireFee = venue.getHireFee();
       MessageCli.VENUE_ENTRY.printMessage(
           name, code, Integer.toString(capacity), Integer.toString(hireFee), "'to do'");
     }
@@ -73,7 +73,7 @@ public class VenueHireSystem {
 
     for (Venue venue : venues) {
       if (venue.getVenueCode().equalsIgnoreCase(venueCode)) {
-        MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venue.GetVenueName());
+        MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venue.getVenueName());
         return;
       }
     }

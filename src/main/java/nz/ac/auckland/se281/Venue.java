@@ -14,7 +14,7 @@ public class Venue {
     this.hireFee = hireFee;
   }
 
-  public String GetVenueName() {
+  public String getVenueName() {
     return venueName;
   }
 
@@ -22,11 +22,11 @@ public class Venue {
     return venueCode;
   }
 
-  public int capacity() {
+  public int getCapacity() {
     return capacity;
   }
 
-  public int hireFee() {
+  public int getHireFee() {
     return hireFee;
   }
 }
