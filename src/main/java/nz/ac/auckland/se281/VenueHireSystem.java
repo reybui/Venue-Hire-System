@@ -72,7 +72,7 @@ public class VenueHireSystem {
     }
 
     for (Venue venue : venues) {
-      if (venue.getVenueCode().equalsIgnoreCase(venueCode)) {
+      if (venue.getVenueCode().equals(venueCode)) {
         MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venue.getVenueName());
         return;
       }
