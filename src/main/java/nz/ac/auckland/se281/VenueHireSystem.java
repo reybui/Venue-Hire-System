@@ -113,11 +113,43 @@ public class VenueHireSystem {
     // determine if systemDate is set
     if (this.systemDate == null) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
+      return;
     }
     // determine if there are venues in the sytem
     if (venues.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
+      return;
     }
+    // assign each option
+    String bookingCode = options[0];
+    String bookingDate = options[1];
+    String clientEmail = options[2];
+    String numOfAttendees = options[3];
+
+    String[] dateParts = bookingDate.split("/");
+    String day = dateParts[0];
+    String month = dateParts[1];
+    String year = dateParts[2];
+
+    // check if booking code exists in the system
+    Venue venue = null;
+    for (Venue v : venues) {
+      if (v.getVenueCode().equals(bookingCode)) {
+        venue = v;
+        break;
+      }
+    }
+    if (venue == null) {
+      MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(bookingCode);
+      return;
+    }
+
+    // create booking reference
+    String bookingReference = BookingReferenceGenerator.generateBookingReference();
+
+    // create booking
+    Booking booking =
+        new Booking(bookingReference, bookingDate, clientEmail, numOfAttendees, venue);
   }
 
   public void printBookings(String venueCode) {
