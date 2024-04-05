@@ -6,6 +6,7 @@ import nz.ac.auckland.se281.Types.FloralType;
 
 public class VenueHireSystem {
   private ArrayList<Venue> venues = new ArrayList<Venue>();
+  private ArrayList<Booking> bookings = new ArrayList<Booking>();
   private String systemDate;
 
   public VenueHireSystem() {}
@@ -83,7 +84,6 @@ public class VenueHireSystem {
         new Venue(
             venueName, venueCode, Integer.parseInt(capacityInput), Integer.parseInt(hireFeeInput));
     venues.add(newVenue);
-    MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
   }
 
   private boolean isNumeric(String str) {
@@ -150,6 +150,7 @@ public class VenueHireSystem {
     // create booking
     Booking booking =
         new Booking(bookingReference, bookingDate, clientEmail, numOfAttendees, venue);
+    bookings.add(booking);
   }
 
   public void printBookings(String venueCode) {
