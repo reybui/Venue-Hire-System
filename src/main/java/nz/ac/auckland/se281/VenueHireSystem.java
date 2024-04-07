@@ -127,9 +127,14 @@ public class VenueHireSystem {
     String numOfAttendees = options[3];
 
     String[] dateParts = bookingDate.split("/");
-    String day = dateParts[0];
-    String month = dateParts[1];
-    String year = dateParts[2];
+    int day = Integer.parseInt(dateParts[0]);
+    int month = Integer.parseInt(dateParts[1]);
+    int year = Integer.parseInt(dateParts[2]);
+
+    String[] systemDateParts = systemDate.split("/");
+    int sysDay = Integer.parseInt(systemDateParts[0]);
+    int sysMonth = Integer.parseInt(systemDateParts[1]);
+    int sysYear = Integer.parseInt(systemDateParts[2]);
 
     // check if booking code exists in the system
     Venue venue = null;
@@ -145,7 +150,23 @@ public class VenueHireSystem {
       return;
     }
 
-    // check if booking date is in the past
+    // check if booking date is in the past ADD EXTRA TESTS
+    if (!systemDate.equals(bookingDate) && year <= sysYear) {
+      if (year == sysYear) {
+        if (month < sysMonth) {
+          MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate);
+          return;
+        } else if (month == sysMonth) {
+          if (day < sysDay) {
+            MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate);
+            return;
+          }
+        }
+      } else {
+        MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate);
+        return;
+      }
+    }
 
     // check if venue is already booked on the date
     for (Booking b : bookings) {
@@ -154,6 +175,21 @@ public class VenueHireSystem {
             venue.getVenueName(), bookingDate);
         return;
       }
+    }
+
+    // adjust number of attendees
+    if (Integer.parseInt(numOfAttendees) > venue.getCapacity()) {
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          numOfAttendees,
+          Integer.toString(venue.getCapacity()),
+          Integer.toString(venue.getCapacity()));
+      numOfAttendees = Integer.toString(venue.getCapacity());
+    } else if (Integer.parseInt(numOfAttendees) < (venue.getCapacity() / 4)) {
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          numOfAttendees,
+          Integer.toString(venue.getCapacity() / 4),
+          Integer.toString(venue.getCapacity()));
+      numOfAttendees = Integer.toString(venue.getCapacity() / 4);
     }
 
     // create booking reference
