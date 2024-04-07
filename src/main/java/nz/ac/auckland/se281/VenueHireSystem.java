@@ -45,8 +45,9 @@ public class VenueHireSystem {
       String code = venue.getVenueCode();
       int capacity = venue.getCapacity();
       int hireFee = venue.getHireFee();
+      String availableDate = venue.getAvailableDate();
       MessageCli.VENUE_ENTRY.printMessage(
-          name, code, Integer.toString(capacity), Integer.toString(hireFee), "'to do'");
+          name, code, Integer.toString(capacity), Integer.toString(hireFee), availableDate);
     }
   }
 
@@ -97,6 +98,11 @@ public class VenueHireSystem {
 
   public void setSystemDate(String dateInput) {
     this.systemDate = dateInput;
+    if (!venues.isEmpty()) {
+      for (Venue venue : venues) {
+        venue.setAvailableDate(dateInput);
+      }
+    }
     MessageCli.DATE_SET.printMessage(systemDate);
   }
 
@@ -138,9 +144,9 @@ public class VenueHireSystem {
 
     // check if booking code exists in the system
     Venue venue = null;
-    for (Venue v : venues) {
-      if (v.getVenueCode().equals(bookingCode)) {
-        venue = v;
+    for (Venue ven : venues) {
+      if (ven.getVenueCode().equals(bookingCode)) {
+        venue = ven;
         break;
       }
     }
@@ -200,6 +206,10 @@ public class VenueHireSystem {
         new Booking(
             bookingReference, bookingDate, clientEmail, numOfAttendees, venue.getVenueName());
     bookings.add(booking);
+
+    // update next available booking
+    venue.setAvailableDate(
+        Integer.toString(sysDay + 1) + "/" + systemDateParts[1] + "/" + systemDateParts[2]);
   }
 
   public void printBookings(String venueCode) {
