@@ -227,6 +227,11 @@ public class VenueHireSystem {
   }
 
   public void printBookings(String venueCode) {
+
+    if (venues.isEmpty()) {
+      MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
+      return;
+    }
     Venue venue = null;
     for (Venue ven : venues) {
       if (ven.getVenueCode().equals(venueCode)) {
