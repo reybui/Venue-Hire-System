@@ -139,9 +139,21 @@ public class VenueHireSystem {
         break;
       }
     }
+
     if (venue == null) {
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(bookingCode);
       return;
+    }
+
+    // check if booking date is in the past
+
+    // check if venue is already booked on the date
+    for (Booking b : bookings) {
+      if (b.getBookingDate().equals(bookingDate) && b.getvenueName().equals(venue.getVenueName())) {
+        MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
+            venue.getVenueName(), bookingDate);
+        return;
+      }
     }
 
     // create booking reference
@@ -149,7 +161,8 @@ public class VenueHireSystem {
 
     // create booking
     Booking booking =
-        new Booking(bookingReference, bookingDate, clientEmail, numOfAttendees, venue);
+        new Booking(
+            bookingReference, bookingDate, clientEmail, numOfAttendees, venue.getVenueName());
     bookings.add(booking);
   }
 

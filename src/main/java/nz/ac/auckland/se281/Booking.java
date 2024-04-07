@@ -5,7 +5,7 @@ public class Booking {
   private String bookingDate;
   private String clientEmail;
   private String numOfAttendees;
-  private Venue venue;
+  private String venueName;
 
   // Booking booking = new Booking(bookingReference, bookingDate, clientEmail,
   // Integer.parseInt(numOfAttendees), bookingCode);
@@ -14,13 +14,21 @@ public class Booking {
       String bookingDate,
       String clientEmail,
       String numOfAttendees,
-      Venue venue) {
+      String venueName) {
     this.bookingReference = bookingReference;
     this.bookingDate = bookingDate;
     this.clientEmail = clientEmail;
     this.numOfAttendees = numOfAttendees;
-    this.venue = venue;
+    this.venueName = venueName;
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
-        this.bookingReference, this.venue.getVenueName(), this.bookingDate, this.numOfAttendees);
+        this.bookingReference, this.venueName, this.bookingDate, this.numOfAttendees);
+  }
+
+  public String getBookingDate() {
+    return this.bookingDate;
+  }
+
+  public String getvenueName() {
+    return this.venueName;
   }
 }
