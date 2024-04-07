@@ -7,6 +7,7 @@ public class Venue {
   private int capacity;
   private int hireFee;
   private String availableDate;
+  private String systemDate;
 
   public Venue(String venueName, String venueCode, int capacity, int hireFee) {
     this.venueName = venueName;
@@ -38,5 +39,27 @@ public class Venue {
 
   public String getAvailableDate() {
     return availableDate;
+  }
+
+  public int getAvailableDay() {
+    String[] dateParts = availableDate.split("/");
+    int day = Integer.parseInt(dateParts[0]);
+    return day;
+  }
+
+  // public int getAvailableMonth(String date) {
+  //   String[] dateParts = date.split("/");
+  //   int month = Integer.parseInt(dateParts[1]);
+  //   return month;
+  // }
+
+  // public int getAvailableYear(String date) {
+  //   String[] dateParts = date.split("/");
+  //   int year = Integer.parseInt(dateParts[2]);
+  //   return year;
+  // }
+
+  public void setSystemDate(String date) {
+    this.systemDate = date;
   }
 }

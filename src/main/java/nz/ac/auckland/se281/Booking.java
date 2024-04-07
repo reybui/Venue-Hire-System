@@ -28,7 +28,17 @@ public class Booking {
     return this.bookingDate;
   }
 
-  public String getvenueName() {
+  public int getBookingDay() {
+    String[] dateParts = this.bookingDate.split("/");
+    int day = Integer.parseInt(dateParts[0]);
+    return day;
+  }
+
+  public String getVenueName() {
     return this.venueName;
+  }
+
+  public String getBookingReference() {
+    return this.bookingReference;
   }
 }

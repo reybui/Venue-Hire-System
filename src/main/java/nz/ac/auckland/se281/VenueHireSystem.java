@@ -156,7 +156,7 @@ public class VenueHireSystem {
       return;
     }
 
-    // check if booking date is in the past ADD EXTRA TESTS
+    // check if booking date is in the past ADD EXTRA TESTS !TURN INTO FUNCTION!
     if (!systemDate.equals(bookingDate) && year <= sysYear) {
       if (year == sysYear) {
         if (month < sysMonth) {
@@ -176,7 +176,7 @@ public class VenueHireSystem {
 
     // check if venue is already booked on the date
     for (Booking b : bookings) {
-      if (b.getBookingDate().equals(bookingDate) && b.getvenueName().equals(venue.getVenueName())) {
+      if (b.getBookingDate().equals(bookingDate) && b.getVenueName().equals(venue.getVenueName())) {
         MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(
             venue.getVenueName(), bookingDate);
         return;
@@ -207,13 +207,51 @@ public class VenueHireSystem {
             bookingReference, bookingDate, clientEmail, numOfAttendees, venue.getVenueName());
     bookings.add(booking);
 
-    // update next available booking
-    venue.setAvailableDate(
-        Integer.toString(sysDay + 1) + "/" + systemDateParts[1] + "/" + systemDateParts[2]);
+    // update next available date !!NOT FINISHED!!
+    setNextAvailableDate(venue, bookingDate);
+  }
+
+  public void setNextAvailableDate(Venue venue, String date) {
+    // split date into parts
+    String[] dateParts = date.split("/");
+    int day = Integer.parseInt(dateParts[0]);
+    int month = Integer.parseInt(dateParts[1]);
+    int year = Integer.parseInt(dateParts[2]);
+
+    day = day + 1;
+
+    String formattedDay = String.format("%02d", day);
+    String formattedMonth = String.format("%02d", month);
+
+    venue.setAvailableDate(formattedDay + "/" + formattedMonth + "/" + dateParts[2]);
   }
 
   public void printBookings(String venueCode) {
-    // TODO implement this method
+    Venue venue = null;
+    for (Venue ven : venues) {
+      if (ven.getVenueCode().equals(venueCode)) {
+        venue = ven;
+        break;
+      }
+    }
+
+    if (venue == null) {
+      MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
+      return;
+    }
+
+    MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venue.getVenueName());
+    boolean hasBookings = false;
+    for (Booking b : bookings) {
+      if (b.getVenueName().equals(venue.getVenueName())) {
+        hasBookings = true;
+        MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(b.getBookingReference(), b.getBookingDate());
+      }
+    }
+
+    if (!hasBookings) {
+      MessageCli.PRINT_BOOKINGS_NONE.printMessage(venue.getVenueName());
+    }
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
