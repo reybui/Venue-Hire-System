@@ -12,6 +12,7 @@ public class VenueHireSystem {
   public VenueHireSystem() {}
 
   public void printVenues() {
+    // determine how many venues are in the system and format the output accordingly
     if (venues.isEmpty()) {
       MessageCli.NO_VENUES.printMessage();
       return;
@@ -38,7 +39,7 @@ public class VenueHireSystem {
       String sizeAsString = Integer.toString(size);
       MessageCli.NUMBER_VENUES.printMessage("are", sizeAsString, "s");
     }
-
+    // loop through venues and print details
     for (int i = 0; i < venues.size(); i++) {
       Venue venue = venues.get(i);
       String name = venue.getVenueName();
@@ -53,6 +54,7 @@ public class VenueHireSystem {
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
+    // determine if input values are valid to create a venue
     if (venueName.trim().isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
       return;
@@ -73,14 +75,14 @@ public class VenueHireSystem {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " positive");
       return;
     }
-
+    // check if venue code already exists and display error if it does
     for (Venue venue : venues) {
       if (venue.getVenueCode().equals(venueCode)) {
         MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venue.getVenueName());
         return;
       }
     }
-
+    // create new venue and add to list of venues
     Venue newVenue =
         new Venue(
             venueName, venueCode, Integer.parseInt(capacityInput), Integer.parseInt(hireFeeInput));
@@ -217,6 +219,8 @@ public class VenueHireSystem {
   }
 
   public void setNextAvailableDate(Venue venue, String date) {
+
+    venue.addBookedDate(date);
     // split date into parts
     String[] dateParts = date.split("/");
     int day = Integer.parseInt(dateParts[0]);
@@ -228,11 +232,13 @@ public class VenueHireSystem {
     String formattedDay = String.format("%02d", day);
     String formattedMonth = String.format("%02d", month);
 
-    venue.setAvailableDate(formattedDay + "/" + formattedMonth + "/" + dateParts[2]);
+    if (date.equals(venue.getAvailableDate())) {
+      venue.setAvailableDate(formattedDay + "/" + formattedMonth + "/" + dateParts[2]);
+    }
   }
 
   public void printBookings(String venueCode) {
-
+    // check if there are bookings in the system
     if (venues.isEmpty()) {
       MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
       return;
@@ -244,12 +250,12 @@ public class VenueHireSystem {
         break;
       }
     }
-
+    // check if venue exists
     if (venue == null) {
       MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
       return;
     }
-
+    // print bookings for the venue
     MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venue.getVenueName());
     boolean hasBookings = false;
     for (Booking b : bookings) {
@@ -258,7 +264,7 @@ public class VenueHireSystem {
         MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(b.getBookingReference(), b.getBookingDate());
       }
     }
-
+    // print message if there are no bookings
     if (!hasBookings) {
       MessageCli.PRINT_BOOKINGS_NONE.printMessage(venue.getVenueName());
     }

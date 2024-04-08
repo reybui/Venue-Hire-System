@@ -725,6 +725,80 @@ public class MainTest {
       assertDoesNotContain("* Catering ", true);
       assertDoesNotContain("not added", true);
     }
+
+    @Test
+    public void bookings_made_after_available_except_last() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES, //
+              SET_DATE,
+              "03/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "06/02/2024", "client001@email.com", "230"),
+              MAKE_BOOKING,
+              options("GGG", "04/02/2024", "client001@email.com", "230"),
+              MAKE_BOOKING,
+              options("GGG", "03/02/2024", "client001@email.com", "230"),
+              PRINT_VENUES));
+
+      assertContains(
+          "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
+              + " 03/02/2024");
+      assertContains(
+          "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+              + " 05/02/2024");
+      assertContains(
+          "Majestic Monarch Mansion (MMM) - 1000 people - $2500 base hire fee. Next available on"
+              + " 03/02/2024");
+    }
+
+    @Test
+    public void testing_SYSDATE_changes() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES, //
+              SET_DATE,
+              "03/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "14/02/2024", "client001@email.com", "230"),
+              SET_DATE,
+              "12/02/2024",
+              MAKE_BOOKING,
+              options("GGG", "12/02/2024", "client001@email.com", "230"),
+              MAKE_BOOKING,
+              options("GGG", "13/02/2024", "client001@email.com", "230"),
+              PRINT_VENUES));
+
+      assertContains(
+          "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+              + " 15/02/2024");
+    }
+
+    @Test
+    public void booking_dates_after_and_before_available_date() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES, //
+              SET_DATE,
+              "03/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "03/02/2024", "client001@email.com", "230"),
+              MAKE_BOOKING,
+              options("GGG", "04/02/2024", "client001@email.com", "230"),
+              MAKE_BOOKING,
+              options("GGG", "06/02/2024", "client001@email.com", "230"),
+              PRINT_VENUES));
+
+      assertContains(
+          "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
+              + " 03/02/2024");
+      assertContains(
+          "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+              + " 05/02/2024");
+      assertContains(
+          "Majestic Monarch Mansion (MMM) - 1000 people - $2500 base hire fee. Next available on"
+              + " 03/02/2024");
+    }
   }
 
   private static final Object[] CREATE_NINE_VENUES =
