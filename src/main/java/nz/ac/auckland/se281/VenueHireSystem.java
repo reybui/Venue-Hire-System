@@ -276,20 +276,59 @@ public class VenueHireSystem {
 
     String cateringName = cateringType.getName();
     int cateringCost = cateringType.getCostPerPerson();
+    int numberOfAttendees = booking.numberOfAttendees();
 
     // create catering service
-    CateringService cateringService = new CateringService(cateringName, cateringCost);
+    CateringService cateringService =
+        new CateringService(cateringName, cateringCost, numberOfAttendees);
     booking.addService(cateringService);
     MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
         "Catering (" + cateringName + ")", bookingReference);
   }
 
   public void addServiceMusic(String bookingReference) {
-    // TODO implement this method
+    // check if booking reference exists
+    Booking booking = null;
+    for (Booking b : bookings) {
+      if (b.getBookingReference().equals(bookingReference)) {
+        booking = b;
+        break;
+      }
+    }
+
+    if (booking == null) {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
+      return;
+    }
+
+    MusicService musicService = new MusicService();
+    booking.addService(musicService);
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    // TODO implement this method
+    // check if booking reference exists
+    Booking booking = null;
+    for (Booking b : bookings) {
+      if (b.getBookingReference().equals(bookingReference)) {
+        booking = b;
+        break;
+      }
+    }
+
+    if (booking == null) {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Floral", bookingReference);
+      return;
+    }
+
+    // get floral type details
+    String floralName = floralType.getName();
+    int floralCost = floralType.getCost();
+
+    // create floral service
+    FloralService floralService = new FloralService(floralName, floralCost);
+    booking.addService(floralService);
+    MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Floral (" + floralName + ")", bookingReference);
   }
 
   public void viewInvoice(String bookingReference) {

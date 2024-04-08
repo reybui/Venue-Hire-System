@@ -1,7 +1,7 @@
 package nz.ac.auckland.se281;
 
 public abstract class Service {
-  protected String cateringType;
+  protected String serviceName;
   protected int cost;
 
   public enum Type {
@@ -10,13 +10,12 @@ public abstract class Service {
     MUSIC
   }
 
-  public Service(String name, int cost) {
-    this.cateringType = name;
+  public Service(int cost) {
     this.cost = cost;
   }
 
-  public String getCateringType() {
-    return cateringType;
+  public int getCost() {
+    return cost;
   }
 
   public abstract Type getServiceType();

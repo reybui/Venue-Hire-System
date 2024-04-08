@@ -48,4 +48,8 @@ public class Booking {
   public void addService(Service service) {
     services.add(service);
   }
+
+  public int numberOfAttendees() {
+    return Integer.parseInt(this.numOfAttendees);
+  }
 }
