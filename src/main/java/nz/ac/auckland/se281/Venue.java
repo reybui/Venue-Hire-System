@@ -6,7 +6,7 @@ public class Venue {
   private String venueCode;
   private int capacity;
   private int hireFee;
-  private String availableDate;
+  private String availableDate = "";
   private String systemDate;
 
   public Venue(String venueName, String venueCode, int capacity, int hireFee) {
