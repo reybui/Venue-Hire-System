@@ -37,6 +37,7 @@ public class Venue {
   }
 
   public void setAvailableDate(String date) {
+    // If the date is already booked, find the next available date
     while (bookedDates.contains(date)) {
       String[] dateParts = date.split("/");
       int day = Integer.parseInt(dateParts[0]) + 1;
