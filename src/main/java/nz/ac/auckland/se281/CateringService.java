@@ -10,6 +10,10 @@ public class CateringService extends Service {
     this.cateringType = cateringType;
   }
 
+  public String getCateringType() {
+    return cateringType;
+  }
+
   @Override
   public Service.Type getServiceType() {
     return Service.Type.CATERING;

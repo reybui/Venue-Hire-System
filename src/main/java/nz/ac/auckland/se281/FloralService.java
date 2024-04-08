@@ -8,6 +8,10 @@ public class FloralService extends Service {
     this.floralName = floralName;
   }
 
+  public String getFloralName() {
+    return floralName;
+  }
+
   @Override
   public Type getServiceType() {
     return Type.FLORAL;

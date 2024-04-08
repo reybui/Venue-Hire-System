@@ -204,7 +204,12 @@ public class VenueHireSystem {
     // create booking
     Booking booking =
         new Booking(
-            bookingReference, bookingDate, clientEmail, numOfAttendees, venue.getVenueName());
+            bookingReference,
+            bookingDate,
+            clientEmail,
+            numOfAttendees,
+            venue.getVenueName(),
+            systemDate);
     bookings.add(booking);
 
     // update next available date !!NOT FINISHED!!
@@ -276,7 +281,7 @@ public class VenueHireSystem {
 
     String cateringName = cateringType.getName();
     int cateringCost = cateringType.getCostPerPerson();
-    int numberOfAttendees = booking.numberOfAttendees();
+    int numberOfAttendees = booking.getNumberOfAttendees();
 
     // create catering service
     CateringService cateringService =
@@ -332,6 +337,51 @@ public class VenueHireSystem {
   }
 
   public void viewInvoice(String bookingReference) {
-    // TODO implement this method
+    // check if booking reference exists
+    Booking booking = null;
+    for (Booking b : bookings) {
+      if (b.getBookingReference().equals(bookingReference)) {
+        booking = b;
+        break;
+      }
+    }
+
+    if (booking == null) {
+      MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
+      return;
+    }
+
+    int venueFee = 0;
+    for (Venue v : venues) {
+      if (v.getVenueName().equals(booking.getVenueName())) {
+        venueFee = v.getHireFee();
+      }
+    }
+
+    // print invoice
+    MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
+        bookingReference,
+        booking.getClientEmail(),
+        booking.getSystemDate(),
+        booking.getBookingDate(),
+        Integer.toString(booking.getNumberOfAttendees()),
+        booking.getVenueName());
+
+    MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(Integer.toString(venueFee));
+    // determine what services are in the booking and print them
+    if (booking.getServiceType() == Service.Type.CATERING) {
+      booking.printCateringService();
+    }
+    if (booking.getServiceType() == Service.Type.FLORAL) {
+      booking.printFloralService();
+    }
+    if (booking.getServiceType() == Service.Type.MUSIC) {
+      booking.printMusicService();
+    }
+
+    MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(
+        Integer.toString(booking.calculateTotalCost(venueFee)));
+
+    MessageCli.END.printMessage();
   }
 }
