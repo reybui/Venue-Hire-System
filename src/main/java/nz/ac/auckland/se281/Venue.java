@@ -34,6 +34,7 @@ public class Venue {
   }
 
   public void setAvailableDate(String date) {
+    if(date.equals(this.availableDate))
     this.availableDate = date;
   }
 
