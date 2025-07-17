@@ -19,11 +19,8 @@ To run this project, ensure you have Java installed on your machine. Follow the 
 2.  Navigate to the project directory:
 `cd venue-hire-system` 
 
-3.  Compile the Java files:
-`javac *.java` 
-
-4.  Run the main application:
-`java Main` 
+3.  Compile and run the project:
+`./mvnw clean compile exec:java@run` 
 
 ## Usage
 
